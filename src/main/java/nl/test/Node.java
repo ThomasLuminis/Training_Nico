@@ -5,47 +5,47 @@ import java.util.List;
 
 public class Node {
 
-	private List<Node> reachableNodes;
+    private List<Route> routes;
 
-	public boolean canReach(Node target) {
-		if (this == target) {
-			return true;
-		}
-		if (reachableNodes == null || reachableNodes.isEmpty()) {
-			return false;
-		}
+    public boolean canReach(Node target) {
+        if (this == target) {
+            return true;
+        }
+        if (routes == null || routes.isEmpty()) {
+            return false;
+        }
 
-		if (reachableNodes.contains(target)) {
-			return true;
-		}
+        for (Route route : routes) {
+            if (route.end().equals(target)) return true;
+        }
 
-		return reachableNodes.stream()
-												 .anyMatch(item -> item.canReach(target));
-	}
+        return routes.stream()
+                .anyMatch(route -> route.end().canReach(target));
+    }
 
-	public int smallestHopsTo(Node target) {
-		if (this == target) {
-			return 0;
-		}
-		if (reachableNodes == null || reachableNodes.isEmpty()) {
-			return 0;
-		}
+    public int smallestHopsTo(Node target) {
+        if (this == target) {
+            return 0;
+        }
+        if (routes == null || routes.isEmpty()) {
+            return 0;
+        }
 
-		if (reachableNodes.contains(target)) {
-			return 1;
-		}
+        for (Route route : routes) {
+            if (route.end().equals(target)) return 1;
+        }
 
-		return 1 + reachableNodes.stream()
-														 .map(n -> n.smallestHopsTo(target))
-														 .min(Comparator.naturalOrder())
-														 .orElse(0);
-	}
+        return 1 + routes.stream()
+                .map(n -> n.end().smallestHopsTo(target))
+                .min(Comparator.naturalOrder())
+                .orElse(0);
+    }
 
-	public List<Node> getReachableNodes() {
-		return reachableNodes;
-	}
+    public List<Route> getRoutes() {
+        return routes;
+    }
 
-	public void setReachableNodes(List<Node> reachableNodes) {
-		this.reachableNodes = reachableNodes;
-	}
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
 }

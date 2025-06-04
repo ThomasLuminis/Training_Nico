@@ -24,10 +24,13 @@ class NodeTest {
 		nodeD = new Node();
 		nodeE = new Node();
 
-		nodeA.setReachableNodes(List.of(nodeB));
-		nodeB.setReachableNodes(List.of(nodeC, nodeD));
-		nodeC.setReachableNodes(List.of(nodeD));
-		nodeD.setReachableNodes(List.of(nodeE));
+		nodeA.setRoutes(List.of(new Route(1, nodeB)));
+		nodeB.setRoutes(List.of(
+				new Route(2, nodeC),
+				new Route(6, nodeD)
+		));
+		nodeC.setRoutes(List.of(new Route(3, nodeD)));
+		nodeD.setRoutes(List.of(new Route(3, nodeE)));
 	}
 
 	@Test
@@ -73,10 +76,13 @@ class NodeTest {
 		Node nodeD = new Node();
 		Node nodeE = new Node();
 
-		nodeA.setReachableNodes(List.of(nodeB));
-		nodeB.setReachableNodes(List.of(nodeC, nodeD));
-		nodeC.setReachableNodes(List.of(nodeD));
-		nodeD.setReachableNodes(List.of(nodeE));
+		nodeA.setRoutes(List.of(new Route(1, nodeB)));
+		nodeB.setRoutes(List.of(
+				new Route(2, nodeC),
+				new Route(6, nodeD)
+		));
+		nodeC.setRoutes(List.of(new Route(3, nodeD)));
+		nodeD.setRoutes(List.of(new Route(3, nodeE)));
 
 		return Stream.of(
 						Arguments.of(nodeA, nodeB),
